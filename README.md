@@ -1,20 +1,66 @@
-# 🔌 Toggle Network Card
-**Active/désactive une carte réseau pour des tests**
+<div align="center">
 
-[![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue)](https://docs.microsoft.com/fr-fr/powershell/)
-[![Licence](https://img.shields.io/badge/Licence-MIT-green)](https://github.com/Flavien-Audinet/toggle-network-card/blob/main/LICENCE)
+# 🔌 Toggle network card
 
----
-## 📌 **Description**
-Script PowerShell pour **activer ou désactiver** une carte réseau en une commande.
-**Dernière mise à jour** : 11 juin 2024
+**Simule un débranchement du câble réseau, puis rebranche — pour tester la reconnexion d'une app ou d'un service.**
 
----
-## 📁 **Fichiers**
-- `toggle-network.ps1` : Script principal
+![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6?logo=windows)
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell&logoColor=white)
+
+</div>
 
 ---
-## 🚀 **Utilisation**
+
+## ✨ Ce que fait le script
+
+1. attend 3 secondes (le temps de basculer sur l'app à tester) ;
+2. **désactive** la carte réseau ;
+3. attend 5 secondes ;
+4. la **réactive**.
+
+Utile pour vérifier qu'un jeu, un client VPN, un serveur ou un programme maison gère bien une coupure réseau.
+
+---
+
+## 🚀 Utilisation
+
+Dans un PowerShell **administrateur** :
 ```powershell
-# Exécuter le script (en tant qu'administrateur)
 .\toggle-network.ps1
+```
+
+Le nom de la carte se règle en tête du script (`Get-NetAdapter` liste les noms disponibles) :
+```powershell
+$adapterName = "Ethernet"
+```
+
+---
+
+## ⚙️ Comment ça marche
+
+```mermaid
+flowchart LR
+    A["attente 3 s"] --> D["Disable-NetAdapter"] --> W["attente 5 s"] --> E["Enable-NetAdapter"]
+```
+
+---
+
+## 🗂️ Organisation des fichiers
+
+```
+toggle-network-card/
+└── toggle-network.ps1   le script (nom de la carte et durées en tête de fichier)
+```
+
+---
+
+## 💻 Compatibilité
+
+| | |
+|---|---|
+| **Système** | Windows 10 et 11 (module NetAdapter) |
+| **Droits** | administrateur |
+
+---
+
+<div align="center"><sub>PowerShell · tests réseau</sub></div>
